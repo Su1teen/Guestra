@@ -11,59 +11,19 @@ const SlideUpModal = ({ isOpen, onClose, children }: ModalProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center">
-      {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-primary/50 animate-fade-in"
+        className="absolute inset-0 bg-primary/60 animate-fade-in"
         onClick={onClose}
       />
-      {/* Modal */}
-      <div className="relative w-[390px] max-w-full bg-surface rounded-t-card animate-slide-up max-h-[80vh] overflow-y-auto">
-        <div className="sticky top-0 bg-surface p-4 border-b border-primary/10">
-          <div className="w-12 h-1 bg-primary/20 rounded-full mx-auto mb-4" />
+      <div className="relative w-full bg-surface rounded-t-3xl animate-slide-up max-h-[85vh] overflow-y-auto">
+        <div className="sticky top-0 bg-surface pt-3 pb-2">
+          <div className="w-10 h-1 bg-primary/10 rounded-full mx-auto" />
         </div>
         {children}
       </div>
     </div>
   );
 };
-
-const BluetoothIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5" />
-  </svg>
-);
-
-const KeypadIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="4" y="4" width="4" height="4" rx="1" />
-    <rect x="10" y="4" width="4" height="4" rx="1" />
-    <rect x="16" y="4" width="4" height="4" rx="1" />
-    <rect x="4" y="10" width="4" height="4" rx="1" />
-    <rect x="10" y="10" width="4" height="4" rx="1" />
-    <rect x="16" y="10" width="4" height="4" rx="1" />
-    <rect x="4" y="16" width="4" height="4" rx="1" />
-    <rect x="10" y="16" width="4" height="4" rx="1" />
-    <rect x="16" y="16" width="4" height="4" rx="1" />
-  </svg>
-);
-
-const WifiIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-    <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-    <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-    <line x1="12" y1="20" x2="12.01" y2="20" />
-  </svg>
-);
-
-const UsersIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-  </svg>
-);
 
 const MobileKeyScreen = () => {
   const [isUnlocking, setIsUnlocking] = useState(false);
@@ -98,97 +58,104 @@ const MobileKeyScreen = () => {
   return (
     <div className="mobile-container min-h-screen bg-surface pb-20">
       {/* Header */}
-      <div className="bg-primary px-5 py-5">
-        <h1 className="text-surface text-lg font-bold">{unitInfo.building}</h1>
-        <p className="text-surface/80 text-sm">Unit {unitInfo.unit}</p>
+      <div className="bg-primary px-6 pt-14 pb-6">
+        <h1 className="text-surface text-xl font-semibold tracking-tight">{unitInfo.building}</h1>
+        <p className="text-surface/60 text-sm mt-0.5">Unit {unitInfo.unit}</p>
       </div>
 
       {/* Unlock Button */}
-      <div className="flex flex-col items-center py-6">
+      <div className="flex flex-col items-center py-10">
         <button
           onClick={handleUnlock}
           disabled={isUnlocking}
-          className={`w-28 h-28 rounded-full border-3 flex flex-col items-center justify-center transition-all active:scale-95 ${
+          className={`w-32 h-32 rounded-full flex flex-col items-center justify-center transition-all duration-200 active:scale-95 ${
             unlockSuccess 
-              ? 'border-status-success bg-status-success/10' 
+              ? 'bg-status-success/10' 
               : isUnlocking 
-                ? 'border-primary/30 bg-primary/5' 
-                : 'border-primary bg-surface hover:bg-primary/5'
+                ? 'bg-primary/[0.03]' 
+                : 'bg-primary/[0.03] active:bg-primary/[0.06]'
           }`}
         >
           {unlockSuccess ? (
             <>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#27AE60" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#27AE60" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
-              <span className="text-status-success font-medium mt-1 text-xs">UNLOCKED</span>
+              <span className="text-status-success font-semibold mt-2 text-xs">UNLOCKED</span>
             </>
           ) : isUnlocking ? (
             <>
-              <div className="w-7 h-7 border-3 border-primary/20 border-t-primary rounded-full animate-spin" />
-              <span className="text-primary/60 font-medium mt-1 text-xs">UNLOCKING</span>
+              <div className="w-8 h-8 border-2 border-primary/10 border-t-primary rounded-full animate-spin" />
+              <span className="text-primary/40 font-medium mt-2 text-xs">UNLOCKING</span>
             </>
           ) : (
             <>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#050A30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#050A30" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
-              <span className="text-primary font-bold mt-1 text-[10px]">PRESS TO</span>
-              <span className="text-primary font-bold text-[10px]">UNLOCK</span>
+              <span className="text-primary font-semibold mt-2 text-[10px] tracking-wide">PRESS TO</span>
+              <span className="text-primary font-semibold text-[10px] tracking-wide">UNLOCK</span>
             </>
           )}
         </button>
       </div>
 
-      {/* Bento Grid */}
-      <div className="px-4 space-y-2.5">
+      {/* Info Cards */}
+      <div className="px-5 space-y-3">
         {/* Bluetooth & PIN Row */}
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-2 gap-3">
           {/* Bluetooth Card */}
-          <div className="card-interactive border border-primary/10 p-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <BluetoothIcon />
-              </div>
-              <div>
-                <h3 className="font-medium text-primary text-xs">Bluetooth</h3>
-                <p className="text-[10px] text-status-success">Connected</p>
-              </div>
+          <div className="bg-primary/[0.02] rounded-2xl p-4">
+            <div className="w-10 h-10 rounded-full bg-primary/[0.05] flex items-center justify-center mb-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#050A30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5" />
+              </svg>
             </div>
+            <p className="font-semibold text-primary text-sm">Bluetooth</p>
+            <p className="text-status-success text-xs mt-0.5">Connected</p>
           </div>
 
           {/* PIN Card */}
-          <div className="card-interactive border border-primary/10 p-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <KeypadIcon />
-              </div>
-              <div>
-                <h3 className="font-medium text-primary text-xs">Door PIN</h3>
-                <p className="text-sm font-mono font-bold text-primary">{unitInfo.pin}</p>
-              </div>
+          <div className="bg-primary/[0.02] rounded-2xl p-4">
+            <div className="w-10 h-10 rounded-full bg-primary/[0.05] flex items-center justify-center mb-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#050A30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="4" y="4" width="4" height="4" rx="1" />
+                <rect x="10" y="4" width="4" height="4" rx="1" />
+                <rect x="16" y="4" width="4" height="4" rx="1" />
+                <rect x="4" y="10" width="4" height="4" rx="1" />
+                <rect x="10" y="10" width="4" height="4" rx="1" />
+                <rect x="16" y="10" width="4" height="4" rx="1" />
+                <rect x="10" y="16" width="4" height="4" rx="1" />
+              </svg>
             </div>
+            <p className="font-semibold text-primary text-sm">Door PIN</p>
+            <p className="text-primary font-mono text-lg mt-0.5">{unitInfo.pin}</p>
           </div>
         </div>
 
         {/* Wi-Fi Card */}
         <button 
           onClick={() => copyToClipboard(unitInfo.wifiPassword, 'wifi')}
-          className="card-interactive border border-primary/10 p-3 w-full text-left"
+          className="w-full bg-primary/[0.02] rounded-2xl p-4 text-left active:bg-primary/[0.04] transition-colors"
         >
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <WifiIcon />
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-primary/[0.05] flex items-center justify-center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#050A30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                  <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+                  <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+                  <line x1="12" y1="20" x2="12.01" y2="20" />
+                </svg>
               </div>
               <div>
-                <h3 className="font-medium text-primary text-xs">Wi-Fi Credentials</h3>
-                <p className="text-[10px] text-primary/60">{unitInfo.wifiName}</p>
-                <p className="text-xs font-mono text-primary">{unitInfo.wifiPassword}</p>
+                <p className="font-semibold text-primary text-sm">Wi-Fi Credentials</p>
+                <p className="text-primary/40 text-xs mt-0.5">{unitInfo.wifiName}</p>
+                <p className="text-primary font-mono text-sm mt-1">{unitInfo.wifiPassword}</p>
               </div>
             </div>
-            <span className={`text-[10px] font-medium transition-colors ${copied === 'wifi' ? 'text-status-success' : 'text-primary/40'}`}>
+            <span className={`text-xs font-medium ${copied === 'wifi' ? 'text-status-success' : 'text-primary/25'}`}>
               {copied === 'wifi' ? 'Copied!' : 'Copy'}
             </span>
           </div>
@@ -197,34 +164,39 @@ const MobileKeyScreen = () => {
         {/* Guest Access Button */}
         <button
           onClick={() => setIsModalOpen(true)}
-          className="w-full h-10 border border-primary text-primary rounded-lg font-medium text-sm flex items-center justify-center gap-2 hover:bg-primary/5 transition-colors"
+          className="w-full h-14 bg-primary/[0.02] text-primary rounded-2xl font-medium text-sm flex items-center justify-center gap-2 active:bg-primary/[0.04] transition-colors"
         >
-          <UsersIcon />
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
           Add Guest / Shared Access
         </button>
       </div>
 
       {/* Guest Access Modal */}
       <SlideUpModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="p-5">
-          <h2 className="text-lg font-bold text-primary mb-1">Share Access</h2>
-          <p className="text-primary/60 text-sm mb-4">Invite a guest to access your unit</p>
+        <div className="px-6 pb-8">
+          <h2 className="text-xl font-semibold text-primary mb-1">Share Access</h2>
+          <p className="text-primary/40 text-sm mb-6">Invite a guest to access your unit</p>
           
-          <div className="space-y-3">
+          <div className="space-y-5">
             <div>
-              <label className="block text-xs font-medium text-primary mb-1.5">Guest Phone Number</label>
+              <label className="block text-[11px] font-semibold text-primary/40 mb-2 uppercase tracking-wider">Guest Phone Number</label>
               <input
                 type="tel"
                 value={guestPhone}
                 onChange={(e) => setGuestPhone(e.target.value)}
                 placeholder="+1 234 567 8900"
-                className="w-full h-11 px-3 border border-primary/10 rounded-lg focus:border-primary focus:outline-none text-sm"
+                className="w-full h-14 px-4 bg-primary/[0.03] border-0 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-base"
               />
             </div>
             
             <div>
-              <label className="block text-xs font-medium text-primary mb-1.5">Access Duration</label>
-              <select className="w-full h-11 px-3 border border-primary/10 rounded-lg focus:border-primary focus:outline-none bg-surface text-sm">
+              <label className="block text-[11px] font-semibold text-primary/40 mb-2 uppercase tracking-wider">Access Duration</label>
+              <select className="w-full h-14 px-4 bg-primary/[0.03] border-0 rounded-xl focus:ring-2 focus:ring-primary focus:outline-none text-base appearance-none">
                 <option>24 Hours</option>
                 <option>3 Days</option>
                 <option>1 Week</option>
@@ -232,7 +204,7 @@ const MobileKeyScreen = () => {
               </select>
             </div>
 
-            <button className="w-full h-10 bg-primary text-surface rounded-lg font-medium text-sm mt-3">
+            <button className="w-full h-12 bg-primary text-surface rounded-full font-semibold text-[15px] mt-2 active:scale-[0.98] transition-transform">
               Send Invitation
             </button>
           </div>

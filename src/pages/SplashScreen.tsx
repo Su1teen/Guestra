@@ -18,11 +18,12 @@ const SplashScreen = () => {
   }, [navigate]);
 
   return (
-    <div className="mobile-container bg-primary flex items-center justify-center min-h-screen">
+    <div className="fixed inset-0 bg-primary flex items-center justify-center">
       <h1
-        className={`text-surface text-2xl font-bold tracking-widest transition-opacity duration-700 ${
+        className={`text-surface text-2xl font-bold tracking-[0.3em] transition-opacity duration-700 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
+        style={{ fontFamily: '-apple-system, "SF Pro Display", BlinkMacSystemFont, sans-serif' }}
       >
         GUESTRA
       </h1>

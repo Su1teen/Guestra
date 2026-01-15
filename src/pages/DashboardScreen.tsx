@@ -1,26 +1,28 @@
 import { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // SVG-based QR Code Component
 const QRCode = ({ data }: { data: string }) => {
-  // Generate a simple QR-like pattern based on data hash
   const generatePattern = () => {
     const hash = data.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const pattern: boolean[][] = [];
     
-    for (let i = 0; i < 21; i++) {
+    for (let i = 0; i < 25; i++) {
       pattern[i] = [];
-      for (let j = 0; j < 21; j++) {
+      for (let j = 0; j < 25; j++) {
         // Position detection patterns (corners)
-        const isCorner = (i < 7 && j < 7) || (i < 7 && j > 13) || (i > 13 && j < 7);
-        const isCornerBorder = isCorner && (i === 0 || i === 6 || j === 0 || j === 6 || (i >= 2 && i <= 4 && j >= 2 && j <= 4));
-        const isCornerInner = isCorner && i >= 2 && i <= 4 && j >= 2 && j <= 4;
+        const isTopLeft = i < 7 && j < 7;
+        const isTopRight = i < 7 && j > 17;
+        const isBottomLeft = i > 17 && j < 7;
+        const isCorner = isTopLeft || isTopRight || isBottomLeft;
         
         if (isCorner) {
-          pattern[i][j] = isCornerBorder || isCornerInner;
+          const ci = isTopLeft ? i : isTopRight ? i : i - 18;
+          const cj = isTopLeft ? j : isTopRight ? j - 18 : j;
+          const isBorder = ci === 0 || ci === 6 || cj === 0 || cj === 6;
+          const isInner = ci >= 2 && ci <= 4 && cj >= 2 && cj <= 4;
+          pattern[i][j] = isBorder || isInner;
         } else {
-          // Data pattern based on hash
-          pattern[i][j] = ((hash * (i + 1) * (j + 1)) % 7) < 3;
+          pattern[i][j] = ((hash * (i + 1) * (j + 1)) % 5) < 2;
         }
       }
     }
@@ -28,9 +30,9 @@ const QRCode = ({ data }: { data: string }) => {
   };
 
   const pattern = generatePattern();
-  const moduleSize = 10;
-  const padding = 20;
-  const size = 21 * moduleSize + padding * 2;
+  const moduleSize = 8;
+  const padding = 16;
+  const size = 25 * moduleSize + padding * 2;
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="mx-auto">
@@ -54,7 +56,6 @@ const QRCode = ({ data }: { data: string }) => {
 };
 
 const DashboardScreen = () => {
-  const navigate = useNavigate();
   const [qrData, setQrData] = useState(`GUESTRA-PASS-${Date.now()}`);
   const [isRegenerating, setIsRegenerating] = useState(false);
 
@@ -67,37 +68,22 @@ const DashboardScreen = () => {
   }, []);
 
   return (
-    <div className="mobile-container min-h-screen bg-primary/5 pb-20">
+    <div className="mobile-container min-h-screen bg-primary/[0.02] pb-20">
       {/* Header */}
-      <div className="px-4 py-3">
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-1.5 text-primary font-medium text-sm"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Back
-        </button>
+      <div className="px-6 pt-14 pb-6">
+        <h1 className="text-xl font-semibold text-primary tracking-tight">Security Pass</h1>
+        <p className="text-primary/40 text-sm mt-0.5">Show this code at building entry</p>
       </div>
 
-      {/* Hero QR Card */}
-      <div className="px-4 mt-2">
-        <div className="card p-5 stable-layout">
-          <h2 className="text-center text-base font-medium text-primary mb-1">
-            Security Pass
-          </h2>
-          <p className="text-center text-xs text-primary/60 mb-4">
-            Show this code at building entry
-          </p>
-          
-          {/* QR Code Container */}
+      {/* QR Card */}
+      <div className="px-5">
+        <div className="bg-surface rounded-3xl p-6 mb-4">
           <div className={`transition-opacity duration-300 ${isRegenerating ? 'opacity-30' : 'opacity-100'}`}>
             <QRCode data={qrData} />
           </div>
           
-          <p className="text-center text-[10px] text-primary/40 mt-4 font-mono">
-            {qrData.slice(0, 20)}...
+          <p className="text-center text-[10px] text-primary/25 mt-4 font-mono tracking-wide">
+            {qrData.slice(0, 24)}...
           </p>
         </div>
 
@@ -105,23 +91,23 @@ const DashboardScreen = () => {
         <button
           onClick={handleRegenerate}
           disabled={isRegenerating}
-          className="w-full mt-4 h-10 border border-primary text-primary rounded-lg font-medium text-sm hover:bg-primary/5 transition-colors disabled:opacity-40"
+          className="w-full h-12 bg-primary/[0.03] text-primary rounded-full font-medium text-sm disabled:opacity-40 active:bg-primary/[0.06] transition-all"
         >
-          {isRegenerating ? 'Regenerating...' : 'Regenerate'}
+          {isRegenerating ? 'Regenerating...' : 'Regenerate Code'}
         </button>
 
-        {/* Info Card */}
-        <div className="card p-4 mt-4">
-          <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-status-success/10 flex items-center justify-center flex-shrink-0">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#27AE60" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Status Card */}
+        <div className="bg-surface rounded-2xl p-5 mt-4">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-status-success/10 flex items-center justify-center flex-shrink-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#27AE60" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                 <polyline points="22 4 12 14.01 9 11.01" />
               </svg>
             </div>
             <div>
-              <h3 className="font-medium text-primary text-sm">Pass Active</h3>
-              <p className="text-xs text-primary/60 mt-0.5">
+              <p className="font-semibold text-primary text-sm">Pass Active</p>
+              <p className="text-primary/40 text-xs mt-0.5">
                 Valid until checkout on January 20, 2026
               </p>
             </div>

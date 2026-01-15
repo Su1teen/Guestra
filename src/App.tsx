@@ -9,17 +9,15 @@ import ProfileScreen from './pages/ProfileScreen';
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex justify-center bg-[#f5f5f5]">
-        <Routes>
-          <Route path="/" element={<SplashScreen />} />
-          <Route path="/auth" element={<AuthScreen />} />
-          <Route path="/dashboard" element={<DashboardScreen />} />
-          <Route path="/key" element={<MobileKeyScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <BottomNavbar />
-      </div>
+      <Routes>
+        <Route path="/" element={<SplashScreen />} />
+        <Route path="/auth" element={<AuthScreen />} />
+        <Route path="/dashboard" element={<DashboardScreen />} />
+        <Route path="/key" element={<MobileKeyScreen />} />
+        <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <BottomNavbar />
     </BrowserRouter>
   );
 }

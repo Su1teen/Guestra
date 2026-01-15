@@ -31,10 +31,12 @@
 
 html, body {
   font-family: 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background-color: #f5f5f5;
+  background-color: #050A30;
   min-height: 100vh;
   min-height: 100dvh;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 #root {
@@ -43,6 +45,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  background-color: #050A30;
 }
 
 /* Safe area padding for notched devices */
@@ -53,19 +56,13 @@ html, body {
 /* Mobile Container */
 .mobile-container {
   width: 100%;
-  max-width: 390px;
+  max-width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
   background-color: var(--surface);
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-@media (min-width: 391px) {
-  .mobile-container {
-    max-width: 390px;
-  }
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
