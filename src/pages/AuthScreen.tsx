@@ -187,7 +187,7 @@ const AuthScreen = () => {
   };
 
   const handleOTPSubmit = () => {
-    if (otp.length === 6) {
+    if (otp.length === 4) {
       setStep('passport');
     }
   };
@@ -249,15 +249,15 @@ const AuthScreen = () => {
         {step === 'otp' && (
           <div className="animate-fade-in">
             <h1 className="text-2xl font-semibold text-primary mb-2 tracking-tight">Verify Your Number</h1>
-            <p className="text-primary/40 text-[15px] mb-10">Enter the 6-digit code sent to {phone}</p>
+            <p className="text-primary/40 text-[15px] mb-10">Enter the 4-digit code sent to {phone}</p>
             
             <div className="mb-8">
-              <OTPInput length={6} value={otp} onChange={setOtp} />
+              <OTPInput length={4} value={otp} onChange={setOtp} />
             </div>
             
             <button
               onClick={handleOTPSubmit}
-              disabled={otp.length < 6}
+              disabled={otp.length < 4}
               className="w-full h-12 bg-primary text-surface rounded-full font-semibold text-[15px] disabled:opacity-25 transition-all active:scale-[0.98]"
             >
               Verify

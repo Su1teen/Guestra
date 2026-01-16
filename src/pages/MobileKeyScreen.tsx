@@ -33,11 +33,13 @@ const MobileKeyScreen = () => {
   const [guestPhone, setGuestPhone] = useState('');
 
   const unitInfo = {
-    building: 'Jasmine Tower',
+    building: 'ACT Towers',
     unit: '2803',
     pin: '284719',
-    wifiName: 'JasmineTower_2803',
+    wifiName: 'ACTTowers_2803',
     wifiPassword: 'Welcome2803!',
+    holidayHomeCompany: 'Paterhaus',
+    holidayHomeLogo: '/Paterhaus.png',
   };
 
   const handleUnlock = () => {
@@ -57,14 +59,32 @@ const MobileKeyScreen = () => {
 
   return (
     <div className="mobile-container min-h-screen bg-surface pb-20">
-      {/* Header */}
-      <div className="bg-primary px-6 pt-14 pb-6">
-        <h1 className="text-surface text-xl font-semibold tracking-tight">{unitInfo.building}</h1>
-        <p className="text-surface/60 text-sm mt-0.5">Unit {unitInfo.unit}</p>
+      {/* Hero Header with Building Image */}
+      <div className="relative">
+        {/* Building Image Background */}
+        <div className="h-44 overflow-hidden">
+          <img 
+            src="/act_towers.png" 
+            alt="ACT Towers" 
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/50 to-primary" />
+        </div>
+        
+        {/* Content Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 px-6 pb-5">
+          <div className="flex items-end justify-between">
+            <div>
+              <h1 className="text-surface text-2xl font-bold tracking-tight">{unitInfo.building}</h1>
+              <p className="text-surface/70 text-sm mt-0.5">Unit {unitInfo.unit}</p>
+            </div>
+
+          </div>
+        </div>
       </div>
 
       {/* Unlock Button */}
-      <div className="flex flex-col items-center py-10">
+      <div className="flex flex-col items-center py-8">
         <button
           onClick={handleUnlock}
           disabled={isUnlocking}
@@ -134,32 +154,42 @@ const MobileKeyScreen = () => {
           </div>
         </div>
 
-        {/* Wi-Fi Card */}
-        <button 
-          onClick={() => copyToClipboard(unitInfo.wifiPassword, 'wifi')}
-          className="w-full bg-primary/[0.02] rounded-2xl p-4 text-left active:bg-primary/[0.04] transition-colors"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-primary/[0.05] flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#050A30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-                  <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-                  <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
-                  <line x1="12" y1="20" x2="12.01" y2="20" />
-                </svg>
-              </div>
-              <div>
-                <p className="font-semibold text-primary text-sm">Wi-Fi Credentials</p>
-                <p className="text-primary/40 text-xs mt-0.5">{unitInfo.wifiName}</p>
-                <p className="text-primary font-mono text-sm mt-1">{unitInfo.wifiPassword}</p>
-              </div>
+        {/* Wi-Fi & Holiday Home Row */}
+        <div className="grid grid-cols-2 gap-3">
+          {/* Wi-Fi Card */}
+          <button 
+            onClick={() => copyToClipboard(unitInfo.wifiPassword, 'wifi')}
+            className="bg-primary/[0.02] rounded-2xl p-4 text-left active:bg-primary/[0.04] transition-colors"
+          >
+            <div className="w-10 h-10 rounded-full bg-primary/[0.05] flex items-center justify-center mb-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#050A30" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+                <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+                <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+                <line x1="12" y1="20" x2="12.01" y2="20" />
+              </svg>
             </div>
-            <span className={`text-xs font-medium ${copied === 'wifi' ? 'text-status-success' : 'text-primary/25'}`}>
-              {copied === 'wifi' ? 'Copied!' : 'Copy'}
+            <p className="font-semibold text-primary text-sm">Wi-Fi</p>
+            <p className="text-primary/40 text-[10px] mt-0.5 truncate">{unitInfo.wifiName}</p>
+            <p className="text-primary font-mono text-xs mt-1">{unitInfo.wifiPassword}</p>
+            <span className={`text-[10px] font-medium mt-2 block ${copied === 'wifi' ? 'text-status-success' : 'text-primary/25'}`}>
+              {copied === 'wifi' ? 'Copied!' : 'Tap to copy'}
             </span>
+          </button>
+
+          {/* Holiday Home Company Card */}
+          <div className="bg-primary/[0.02] rounded-2xl p-4">
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-3 overflow-hidden">
+              <img 
+                src={unitInfo.holidayHomeLogo} 
+                alt="Paterhaus" 
+                className="w-8 h-8 object-contain"
+              />
+            </div>
+            <p className="font-semibold text-primary text-sm">Holiday Home</p>
+            <p className="text-primary/60 text-xs mt-0.5">{unitInfo.holidayHomeCompany}</p>
           </div>
-        </button>
+        </div>
 
         {/* Guest Access Button */}
         <button

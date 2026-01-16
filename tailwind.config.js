@@ -10,6 +10,8 @@ export default {
         primary: '#050A30',
         surface: '#FFFFFF',
         'status-success': '#27AE60',
+        'status-warning': '#F39C12',
+        'status-error': '#E53E3E',
       },
       fontFamily: {
         sans: ['"SF Pro Display"', 'Inter', 'sans-serif'],
