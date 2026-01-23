@@ -188,6 +188,12 @@ const AuthScreen = () => {
 
   const handleOTPSubmit = () => {
     if (otp.length === 4) {
+      // Demo mode: entering 1111 goes to fake profile
+      if (otp === '1111') {
+        localStorage.setItem('guestra_user_id', 'demo_user');
+        navigate('/profile2');
+        return;
+      }
       setStep('passport');
     }
   };

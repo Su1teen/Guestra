@@ -6,6 +6,7 @@ import LoginScreen from './pages/LoginScreen';
 import DashboardScreen from './pages/DashboardScreen';
 import MobileKeyScreen from './pages/MobileKeyScreen';
 import ProfileScreen from './pages/ProfileScreen';
+import Profile2Screen from './pages/Profile2Screen';
 import PassportScanner from './pages/PassportScanner';
 import VerificationScreen from './pages/VerificationScreen';
 
@@ -25,6 +26,7 @@ function AppContent() {
         <Route path="/dashboard" element={<DashboardScreen />} />
         <Route path="/key" element={<MobileKeyScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/profile2" element={<Profile2Screen />} />
         <Route path="/scan-passport" element={<PassportScanner />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
