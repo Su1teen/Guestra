@@ -18,6 +18,13 @@ const LoginScreen = () => {
     // Simulate brief loading
     await new Promise(resolve => setTimeout(resolve, 800));
 
+    // Demo mode: entering 1111 goes to fake profile
+    if (otpCode === '1111') {
+      localStorage.setItem('guestra_user_id', 'demo_user');
+      navigate('/profile2');
+      return;
+    }
+
     // Store user ID 11 in localStorage for session
     localStorage.setItem('guestra_user_id', '11');
 
